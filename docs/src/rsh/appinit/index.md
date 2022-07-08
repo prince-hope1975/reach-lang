@@ -18,8 +18,6 @@ init();
 @{ref("rsh", "init")}
 A @{defn("init statement")}, written `{!rsh} init();`, finalizes all of the available participants, views, and compilation options.
 
-Hello, Jay!
-
 @{ref("rsh", "deploy")}
 In earlier versions of Reach, this was called `{!rsh} deploy()`, but it was
 changed because that name was misleading.
