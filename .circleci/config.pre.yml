@@ -169,6 +169,27 @@ jobs:
               }
             }]
           }
+  "docs-check-extension-hover-doc":
+    executor: fake
+    steps:
+    - checkout
+    - workattach
+    - srd_no
+    - run: |
+        cp /tmp/workspace/search/* ./docs/search/
+        (cd docs && make update-search)
+        curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+        source ~/.profile
+        nvm install --lts
+        npm install -g ts-node
+        npm i ts-node@latest
+        (cd vsce/ && ts-node util/updateKeywordDocumentation.ts)
+        echo
+        echo "Finished running hover documentation script"
+        echo
+        # Return a non-zero exit code if there are changes.
+        ! git status | grep keywordToDocumentation.ts
+    - slack_fail
   "sh-check":
     executor: fake
     steps:
@@ -344,6 +365,9 @@ workflows:
   docs:
     jobs:
     - "docs-render"
+    - "docs-check-extension-hover-doc":
+       requires:
+       - "docs-render"
     - "docs-deploy":
        filters:
          branches:
