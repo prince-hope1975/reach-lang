@@ -53,7 +53,6 @@ dependencies:
 - main-tester
 - memory
 - mtl
-- mysql-simple
 - optparse-applicative
 - OTP
 - parsec
