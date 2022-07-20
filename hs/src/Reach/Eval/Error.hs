@@ -167,6 +167,7 @@ data EvalError
   | Err_Eval_EmptyData
   | Err_JSON SLValTy
   | Err_ContractCode ConnectorName String SLValTy
+  | Err_EthTooManyArgs Int
   deriving (Eq, Generic)
 
 instance HasErrorCode EvalError where
@@ -315,6 +316,7 @@ instance HasErrorCode EvalError where
     Err_Eval_EmptyData -> 135
     Err_JSON {} -> 136
     Err_ContractCode {} -> 137
+    Err_EthTooManyArgs {} -> 138
 
 --- FIXME I think most of these things should be in Pretty
 
@@ -777,5 +779,6 @@ instance Show EvalError where
       "Cannot convert value to JSON: " <> show_sv sv
     Err_ContractCode cn msg sv ->
       "Failed to compile or parse contract code for " <> show cn <> ": " <> msg <> ": " <> show_sv sv
+    Err_EthTooManyArgs n -> "A maximum of " <> show ethMaxAPIViewArgLength <> " arguments are supported for APIs and Views on Ethereum.  Found " <> show n <> "."
     where
       displayPrim = drop (length ("SLPrim_" :: String)) . conNameOf

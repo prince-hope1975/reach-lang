@@ -14,6 +14,9 @@ import Reach.AST.SL
 recursionDepthLimit :: Int
 recursionDepthLimit = 2 ^ (16 :: Int)
 
+ethMaxAPIViewArgLength :: Int
+ethMaxAPIViewArgLength = 12
+
 type SLValTy = (SLVal, Maybe DLType)
 
 data SLMode

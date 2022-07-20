@@ -3317,6 +3317,9 @@ evalPrim p sargs =
       ix <- flip mapWithKeyM im $ \k -> \(at, ty) ->
         case ty of
           ST_Fun (SLTypeFun {..}) -> do
+            cns <- readDlo dlo_connectors
+            when ((M.member "ETH" cns) && length stf_dom > ethMaxAPIViewArgLength) $
+              expect_ $ Err_EthTooManyArgs $ length stf_dom
             let nk = maybe k (<> "_" <> k) mns
             verifyNotReserved nAt nk
             let nkb = bpack nk
@@ -3366,7 +3369,11 @@ evalPrim p sargs =
             let io = SLSSVal at Public vo
             di <-
               case t of
-                ST_Fun (SLTypeFun {..}) ->
+                ST_Fun (SLTypeFun {..}) -> do
+                  cns <- readDlo dlo_connectors
+                  when ((M.member "ETH" cns)
+                        && length stf_dom > ethMaxAPIViewArgLength) $
+                    expect_ $ Err_EthTooManyArgs $ length stf_dom
                   IT_Fun <$> mapM st2dte stf_dom <*> st2dte stf_rng
                 ST_UDFun {} ->
                   expect_ $ Err_View_UDFun

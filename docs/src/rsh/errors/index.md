@@ -2725,6 +2725,10 @@ This error indicates that you are using a function, like `{!rsh} ContractCode`, 
 
 This error indicates that there was an error while parsing or compiling contract code for `{!rsh} ContractCode`.
 
+## {#RE0138} RE0138
+
+This error indicates that too many arguments are used for an API or a View when using the Ethereum connector.
+
 ## {#REP0000} REP0000
 
 This error indicates that the body of a `{!rsh} while` loop does not make a publication before the `{!rsh} continue`
