@@ -1,0 +1,8 @@
+reachc: error[RE0138]: A maximum of 12 arguments are supported for APIs and Views on Ethereum.  Found 13.
+
+  ./eth-api-stack-depth.rsh:26:16:application
+
+  26|   const A = API({
+
+For further explanation of this error, see: https://docs.reach.sh/rsh/errors/#RE0138
+
